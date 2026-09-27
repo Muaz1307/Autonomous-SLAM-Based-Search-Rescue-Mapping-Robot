@@ -19,7 +19,7 @@ An ESP32-S3–controlled 4WD rover that explores an unknown space, avoids obstac
 | L298N Motor Driver | Drives 4 DC gear motors (BL, BR, FR, FL) via PWM |
 | 4WD Rover Chassis | Mechanical platform |
 | 2× 18650 Li-ion + BMS, TP4056 | Rechargeable power supply and charging protection |
-| HLK-LD2410C mmWave sensor | Included in BOM/design for human-presence detection (see [Status](#5-project-status--known-gaps)) |
+| HLK-LD2410C mmWave sensor | Included in BOM/design for human-presence detection |
 
 ### Pin Map (from firmware)
 
@@ -94,22 +94,8 @@ Recalibrate `PULSES_PER_CM` and `TURN_90_PULSES` on the bench for your specific 
 The uploaded firmware implements the **core mapping/navigation loop** (sensor fusion, obstacle avoidance, occupancy grid, periodic servo actuation). A few features described in the project report are **not yet present in this code version**:
 
 - **Wi-Fi telemetry / remote monitoring station:** not implemented — no `WiFi.h` usage or transmission code in the current sketch.
-- **HLK-LD2410C human-presence detection:** the sensor is in the BOM/schematic but has no driver or UART read code in this sketch.
 - **Frontier-based exploration:** current behavior is "drive forward, turn away from obstacles" rather than active frontier selection over the grid.
 - **Return-to-home routine:** odometry (`posX`, `posY`, `heading`) is tracked, but no return-to-start state machine is implemented yet.
-
-If you're submitting this alongside the report, it's worth noting these as the current implementation status / next milestones rather than presenting the firmware as feature-complete.
-
----
-
-## 6. Future Work
-
-- Integrate HLK-LD2410C over UART for human-presence detection and confirmation logic
-- Add Wi-Fi (ESP32 built-in) to stream the occupancy grid and alerts to a monitoring dashboard
-- Implement frontier-based exploration over the occupancy grid instead of fixed forward driving
-- Add a return-to-home state machine using the tracked odometry
-- Improve localization with better sensor fusion (e.g., complementary/Kalman filtering of IMU + encoders)
-- Consider incremental LiDAR or camera-based sensing for richer mapping and hazard detection
 
 ---
 
